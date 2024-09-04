@@ -1,0 +1,1 @@
+podman build -t dev-container (dirname (realpath (status --current-filename)))

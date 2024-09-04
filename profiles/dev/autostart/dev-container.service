@@ -1,0 +1,12 @@
+[Unit]
+Description=Dev container service
+
+[Service]
+ExecStartPre=sh -c "test -e /tmp/.X11-unix/X0 -a -e $XDG_RUNTIME_DIR/$WAYLAND_DISPLAY -a -e $XDG_RUNTIME_DIR/pipewire-0 && cp $XDG_RUNTIME_DIR/.mutter-Xwaylandauth* $HOME/.Xauthority"
+ExecStart=podman start -a dev-container
+ExecStop=podman stop dev-container
+Restart=on-failure
+RestartSec=5
+
+[Install]
+WantedBy=graphical-session.target
