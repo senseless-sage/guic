@@ -5,11 +5,18 @@ function guic -a cmd profile name -d 'Create and manage containers, which suppor
 
     if [ -z "$profile" -o ! -d "$app_dir/profiles/$profile" ]
         echo "Profile not found: $profile."
+        return 1
+    end
+
+    if [ "$cmd" = build ]
+        build $app_dir $profile
         return
     end
 
-    [ "$cmd" = build ] && build $app_dir $profile
-    [ "$cmd" = create ] && create $app_dir $profile $name
+    if [ "$cmd" = create ]
+        create $app_dir $profile $name
+        return
+    end
 end
 
 function build -a app_dir profile

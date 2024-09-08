@@ -1,22 +1,19 @@
 # archlinux-wine-gaming-container
 
-Setup for playing directx9 games in docker / podman with wine and dxvk.
+Setup for playing directx games in podman with wine and dxvk.
 
-## Get Started
-1. `./build.sh`
-2. `./create.sh`
-    - You need to adjust your shared volumes before executing
-3. `./start.sh`
-3. `WINEARCH=win32 WINEPREFIX=~/.wine wine wineboot`
-4. `winetricks -q --force xact vcrun2010 dotnet452 dxvk`
-5. Play, `wine game.exe`
-
-## Turn network on/off for the container
-`sudo sed -i 's/Networks":{"none"/Networks":{"bridge"/' /var/lib/docker/containers/$(docker ps -aqf "name=wine-gaming")*/config.v2.json && sudo systemctl restart docker`
+## Getting started
+```sh
+$ guic build base/archlinux
+$ guic build gaming
+$ guic create gaming
+$ podman start -ai gaming-container
+$ wine game.exe
+```
 
 ## Notes
 - FPS counter: DXVK_HUD=1 or WINEDEBUG=-all,+fps
-- maybe needed winetricks depenendcies: msxml6, faudio, glut, mfc100, gfw, msasn1, winhttp
+- maybe needed winetricks depenendcies: dotnet452, msxml6, faudio, glut, mfc100, gfw, msasn1, winhttp
 - maybe needed os dependencies: winbind, samba
 - LIBGL_DEBUG=verbose glxinfo | grep libgl
 - xdpyinfo | g -C 20 dri

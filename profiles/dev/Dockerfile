@@ -1,6 +1,6 @@
 FROM debian-gui-container
 
-RUN apt update && apt -y install catatonit fish micro git tree pcmanfm
+RUN apt update && apt -y install catatonit git fd-find fzf bat ripgrep exa tree curl micro visidata python3-openpyxl lf pcmanfm
 
 # Install vscode
 RUN wget -qO - https://packages.microsoft.com/keys/microsoft.asc \

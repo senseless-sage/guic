@@ -8,9 +8,10 @@
 ## Usage
 Example for setting up a dev container and running vscode:
 ```sh
+$ guic build base/debian
 $ guic build dev
 $ guic create dev
-$ podman start -ai dev-container
+$ podman start dev-container
 $ podman exec dev-container code
 ```
 
