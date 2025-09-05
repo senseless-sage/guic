@@ -1,5 +1,7 @@
 FROM archlinux-gui-container
 
+USER root
+
 RUN echo -e "[multilib]\nInclude = /etc/pacman.d/mirrorlist" >> /etc/pacman.conf
 
 RUN pacman --noconfirm --needed -Syyu \
