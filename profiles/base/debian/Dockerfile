@@ -1,6 +1,7 @@
 FROM debian
 
 ARG USER
+ARG LOCAL_TIME
 
 RUN apt update && apt -y install \
     libva2 libvdpau1 libvdpau-va-gl1 \
@@ -10,6 +11,8 @@ RUN apt update && apt -y install \
     locales gpg wget fish catatonit
 
 RUN echo "en_US.UTF-8 UTF-8" >> /etc/locale.gen && locale-gen
+
+RUN ln -sf "$LOCAL_TIME" /etc/localtime
 
 RUN useradd -m -G audio,video -s /usr/bin/fish $USER
 

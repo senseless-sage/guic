@@ -1,6 +1,7 @@
 FROM archlinux
 
 ARG USER
+ARG LOCAL_TIME
 
 RUN pacman --noconfirm --needed -Syyu \
     libva libvdpau \
@@ -12,6 +13,8 @@ RUN pacman --noconfirm --needed -Syyu \
     && pacman -Sc --noconfirm
 
 RUN echo "en_US.UTF-8 UTF-8" >> /etc/locale.gen && locale-gen
+
+RUN ln -sf "$LOCAL_TIME" /etc/localtime
 
 RUN useradd -m -G storage,audio,video -s /bin/bash $USER
 

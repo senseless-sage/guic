@@ -1,0 +1,7 @@
+[Desktop Entry]
+Name=Dbeaver
+Exec=podman exec dev-container sh -c '(dbeaver %F &)'
+Icon=dbeaver
+Type=Application
+StartupNotify=false
+StartupWMClass=Dbeaver
