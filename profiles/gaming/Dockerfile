@@ -13,8 +13,7 @@ RUN pacman --noconfirm --needed -Syyu \
 
 USER $USER
 
-ENV WINEARCH=win32 \
-    WINEPREFIX=/home/$USER/.wine \
+ENV WINEPREFIX=/home/$USER/.wine \
     WINEDLLOVERRIDES="xaudio2_6,xaudio2_7,x3daudio1_7,xapofx1_5,xactengine3_7,msvcp100,msvcr100,vcomp100,atl100,d3d8,d3d9,d3d10core,d3d11,dxgi,d3dcompiler_43,d3dcompiler_47,d3dx9_43=n,b"
     
 RUN xvfb-run sh -c 'wine wineboot && wine winecfg -v win7 && winetricks -q -f xact vcrun2010 dxvk'

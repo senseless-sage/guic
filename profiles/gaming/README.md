@@ -7,8 +7,8 @@ Setup for playing directx games in podman with wine and dxvk.
 $ guic build base/archlinux
 $ guic build gaming
 $ guic create gaming
-$ podman start -ai gaming-container
-$ wine game.exe
+$ podman start gaming-container
+$ podman exec gaming-container wine game.exe
 ```
 
 ## Notes
