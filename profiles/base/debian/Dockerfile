@@ -1,6 +1,6 @@
 FROM debian
 
-ARG USER
+ARG USERNAME
 ARG LOCAL_TIME
 
 RUN apt update && apt -y install \
@@ -10,18 +10,21 @@ RUN apt update && apt -y install \
     libwayland-client0 libwayland-cursor0 libwayland-egl1 libxcb1 libxkbcommon0 \
     locales gpg wget fish catatonit
 
-RUN echo "en_US.UTF-8 UTF-8" >> /etc/locale.gen && locale-gen
+COPY --chmod=755 ./resources/xdg-open.fish /usr/bin/xdg-open
 
+RUN echo "en_US.UTF-8 UTF-8" >> /etc/locale.gen && locale-gen
 RUN ln -sf "$LOCAL_TIME" /etc/localtime
 
-RUN useradd -m -G audio,video -s /usr/bin/fish $USER
+RUN useradd -m -G audio,video -s /usr/bin/fish $USERNAME
 
-RUN mkdir -p /run/user/1000 && chown -R $USER:$USER /run/user/1000
+ENV XAUTHORITY=/home/$USERNAME/.Xauthority
+ENV QT_QPA_PLATFORM=wayland
 
-ENV USER=$USER
+ENV XDG_RUNTIME_DIR=/run/user/1000
+RUN mkdir -p $XDG_RUNTIME_DIR && chown -R $USERNAME:$USERNAME $XDG_RUNTIME_DIR
 
-WORKDIR /home/$USER
-
-USER $USER
+ENV USER=$USERNAME
+WORKDIR /home/$USERNAME
+USER $USERNAME
 
 ENTRYPOINT ["/usr/bin/catatonit", "-P"]

@@ -1,0 +1,9 @@
+[Desktop Entry]
+Name=Zed
+Exec=podman exec dev-container sh -c 'nohup setsid zed </dev/null >/dev/null 2>&1 &'
+Icon=zed
+Type=Application
+StartupNotify=false
+StartupWMClass=dev.zed.Zed
+Categories=Utility;TextEditor;Development;IDE;
+MimeType=text/plain;application/x-zerosize;x-scheme-handler/zed;

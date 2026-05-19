@@ -6,13 +6,13 @@
 3. Run ./guic/setup.fish
 
 ## Usage
-Example for setting up a dev container and running vscode:
+Example for setting up a dev container and running zed:
 ```sh
 $ guic build base/debian
 $ guic build dev
 $ guic create dev
 $ podman start dev-container
-$ podman exec dev-container code
+$ podman exec dev-container zed
 ```
 
 ## Profiles
@@ -34,13 +34,13 @@ Guic has auto completion, so you can just TAB through your profiles.
 ## Auto starting the dev container
 If you want your dev container to auto start on reboot, then you can run the setup script.
 
-`$ fish ./guic/profiles/dev/autostart/setup.fish`
+`$ fish ./guic/profiles/dev/resources/autostart/setup.fish`
 
 ## Desktop environment integration for the dev container
 If you want to launch a dev container app from your hosts system app launcher, then
-you can add a *XDG desktop entry* for it to the `./guic/profiles/dev/apps` dir and run the setup script.
+you can add a *XDG desktop entry* for it to the `./guic/profiles/dev/resources/apps` dir and run the setup script.
 
-`$ fish ./guic/profiles/dev/apps/setup.fish`
+`$ fish ./guic/profiles/dev/resources/apps/setup.fish`
 
 ## Init system in the dev container
 You should use an init system for running your apps inside the container to prevent zombie processes.
@@ -48,7 +48,7 @@ Guic's dev container uses catatonit by default.
 
 To run a process beneath the init system do so:
 
-`$ podman exec dev-container sh -c '(app &)'`
+`$ podman exec dev-container sh -c 'nohup setsid $APP </dev/null >/dev/null 2>&1 &'`
 
 ## Compatibility
 Guic works just in environments with a running Xorg or Wayland display server. So it runs natively on Linux and could be used on Windows and MacOS with additional configuration.
