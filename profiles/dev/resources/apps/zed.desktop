@@ -1,6 +1,6 @@
 [Desktop Entry]
 Name=Zed
-Exec=podman exec dev-container sh -c 'nohup setsid zed </dev/null >/dev/null 2>&1 &'
+Exec=podman exec dev-container sh -c 'setsid -f zed </dev/null >/dev/null 2>&1'
 Icon=zed
 Type=Application
 StartupNotify=false

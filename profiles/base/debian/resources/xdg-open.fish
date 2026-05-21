@@ -62,9 +62,9 @@ function xdg-open
     set -l exec_args (string split ' ' -- $exec_line)
 
     if grep -qs '^Terminal=true' "$desktop_file"
-        nohup setsid $TERMINAL -e $exec_args "$target" </dev/null >/dev/null 2>&1 &
+        nohup setsid -f $TERMINAL -e $exec_args "$target" </dev/null >/dev/null 2>&1
     else
-        nohup setsid $exec_args "$target" </dev/null >/dev/null 2>&1 &
+        nohup setsid -f $exec_args "$target" </dev/null >/dev/null 2>&1
     end
 
     return 0

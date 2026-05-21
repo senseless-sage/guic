@@ -1,21 +1,21 @@
 FROM debian-gui-container
 
-USER root
-
-COPY ./resources/debian.sources /etc/apt/sources.list.d/debian.sources
-
-ENV DBUS_SESSION_BUS_ADDRESS=unix:path=$XDG_RUNTIME_DIR/bus
-ENV GNOME_KEYRING_CONTROL=$XDG_RUNTIME_DIR/keyring
-ENV SSH_AUTH_SOCK=$XDG_RUNTIME_DIR/keyring/ssh
-
 ENV BUN_INSTALL=/usr/lib/bun-linux-x64
 ENV GOROOT=/usr/local/go
 ENV GOBIN=/home/$USER/go/bin
 
 ENV PATH="${PATH}:${BUN_INSTALL}/bin:${GOROOT}/bin:${GOBIN}"
 
-RUN apt update && apt -y install dbus gnome-keyring xdg-desktop-portal-gtk \
-    git rsync fd-find fzf bat ripgrep eza tree curl micro visidata python3-openpyxl lf pcmanfm unzip fonts-noto-color-emoji
+ENV DBUS_SESSION_BUS_ADDRESS=unix:path=$XDG_RUNTIME_DIR/bus
+ENV GNOME_KEYRING_CONTROL=$XDG_RUNTIME_DIR/keyring
+ENV SSH_AUTH_SOCK=$XDG_RUNTIME_DIR/keyring/ssh
+
+USER root
+
+COPY ./resources/debian.sources /etc/apt/sources.list.d/debian.sources
+
+RUN apt update && apt -y install dbus xdg-desktop-portal-gtk gnome-keyring dunst \
+    git rsync jq fd-find fzf bat ripgrep eza tree curl micro visidata python3-openpyxl lf pcmanfm unzip fonts-noto-color-emoji
 
 RUN wget -O /usr/share/keyrings/dbeaver.gpg.key https://dbeaver.io/debs/dbeaver.gpg.key \
     && echo "deb [signed-by=/usr/share/keyrings/dbeaver.gpg.key] https://dbeaver.io/debs/dbeaver-ce /" \
@@ -34,6 +34,7 @@ RUN curl -L "https://cloud.zed.dev/releases/stable/latest/download?asset=zed&arc
     | tar -xz -C  /usr/lib/ \
     && ln -sf /usr/lib/zed.app/bin/zed /usr/bin/zed
 
+COPY --chmod=755 ./resources/updater.fish /usr/local/bin/updater.fish
 COPY --chmod=755 ./resources/entrypoint.sh /usr/local/bin/entrypoint.sh
 
 USER $USER

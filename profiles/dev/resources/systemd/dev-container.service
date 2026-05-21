@@ -1,0 +1,23 @@
+[Unit]
+Description=Dev container service
+PartOf=graphical-session.target
+After=graphical-session.target
+
+[Service]
+Type=simple
+ExecStartPre=sh -ec " \
+  test -e /tmp/.X11-unix/X0 && \
+  test -e $XDG_RUNTIME_DIR/$WAYLAND_DISPLAY && \
+  test -e $XDG_RUNTIME_DIR/pipewire-0 && \
+  authfile=$(find $XDG_RUNTIME_DIR -maxdepth 1 -name '.mutter-Xwaylandauth.*' -print -quit) && \
+  test -e $authfile && \
+  ln -sf $authfile $HOME/.Xauthority \
+"
+ExecStart=podman start -a dev-container
+ExecStop=podman stop dev-container
+
+Restart=on-failure
+RestartSec=5
+
+[Install]
+WantedBy=graphical-session.target

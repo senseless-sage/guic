@@ -1,0 +1,6 @@
+[Unit]
+Description=Check for updates in dev-container
+
+[Service]
+Type=oneshot
+ExecStart=podman exec -u 0  dev-container fish "/usr/local/bin/updater.fish"

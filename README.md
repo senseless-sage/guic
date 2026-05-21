@@ -32,9 +32,9 @@ The default profiles are:
 Guic has auto completion, so you can just TAB through your profiles.
 
 ## Auto starting the dev container
-If you want your dev container to auto start on reboot, then you can run the setup script.
+If you want your dev container to auto start on boot, then you can run the setup script.
 
-`$ fish ./guic/profiles/dev/resources/autostart/setup.fish`
+`$ fish ./guic/profiles/dev/resources/systemd/setup.fish`
 
 ## Desktop environment integration for the dev container
 If you want to launch a dev container app from your hosts system app launcher, then
@@ -48,7 +48,7 @@ Guic's dev container uses catatonit by default.
 
 To run a process beneath the init system do so:
 
-`$ podman exec dev-container sh -c 'nohup setsid $APP </dev/null >/dev/null 2>&1 &'`
+`$ podman exec dev-container sh -c 'setsid -f $APP </dev/null >/dev/null 2>&1'`
 
 ## Compatibility
 Guic works just in environments with a running Xorg or Wayland display server. So it runs natively on Linux and could be used on Windows and MacOS with additional configuration.
