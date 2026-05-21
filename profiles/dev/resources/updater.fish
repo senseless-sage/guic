@@ -131,9 +131,9 @@ end
 
 set -l list (string join ", " $updates)
 
-set -l action (as_user dunstify --action="upgrade,Upgrade" --action="dismiss,Dismiss" --urgency=normal --block "Updates Available" "Update: $list")
+set -l action (as_user dunstify --action="default,Upgrade" --urgency=normal --block --timeout=0 "Updates Available" "Update: $list")
 
-if test "$action" != "upgrade"
+if test "$action" != "default"
     exit 0
 end
 

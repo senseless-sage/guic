@@ -31,14 +31,19 @@ The default profiles are:
 
 Guic has auto completion, so you can just TAB through your profiles.
 
-## Auto starting the dev container
-If you want your dev container to auto start on boot, then you can run the setup script.
+## Auto starting and updating the dev container
+If you want your dev container to auto start on boot and update automatically, then you can run the following setup script.
 
 `$ fish ./guic/profiles/dev/resources/systemd/setup.fish`
 
+Once a day the updater will check for updates and notify you if there are any available or your system is up to date.
+
+If there are updates available, you can middle mouse click on the notification to install them or left click to dismiss it.
+
 ## Desktop environment integration for the dev container
-If you want to launch a dev container app from your hosts system app launcher, then
-you can add a *XDG desktop entry* for it to the `./guic/profiles/dev/resources/apps` dir and run the setup script.
+If you want to launch a dev container app from your hosts system app launcher,
+
+then you can add a *XDG desktop entry* for it to the `./guic/profiles/dev/resources/apps` dir and run the setup script.
 
 `$ fish ./guic/profiles/dev/resources/apps/setup.fish`
 
@@ -51,7 +56,9 @@ To run a process beneath the init system do so:
 `$ podman exec dev-container sh -c 'setsid -f $APP </dev/null >/dev/null 2>&1'`
 
 ## Compatibility
-Guic works just in environments with a running Xorg or Wayland display server. So it runs natively on Linux and could be used on Windows and MacOS with additional configuration.
+Guic works just in environments with a running Xorg or Wayland display server.
+
+So it runs natively on Linux and could be used on Windows and MacOS with additional configuration.
 
 ## Usefull podman container options
 - Add "--ipc=host" if you dont care about security and want to avoid the X shared memory crash or use ""--shm-size=2gb".
