@@ -70,28 +70,26 @@ function upgrade_apt
 end
 
 function upgrade_bun
-    set -l tmp (mktemp -d)
+    set -l tmp (as_user mktemp)
 
-    as_user curl -fLsS https://github.com/oven-sh/bun/releases/latest/download/bun-linux-x64.zip -o $tmp/bun.zip
+    as_user curl -fLsS https://github.com/oven-sh/bun/releases/latest/download/bun-linux-x64.zip -o $tmp
     or fail "failed downloading bun"
 
-    unzip -o $tmp/bun.zip -d /tmp/
+    rm -rf /usr/lib/bun-linux-x64
+    unzip -o $tmp -d /usr/lib/
     or fail "failed extracting bun"
 
-    cp /tmp/bun-linux-x64/bun /usr/lib/bun/
-    or fail "failed installing bun"
-
-    ln -sf /usr/lib/bun/bun /usr/bin/bun
+    ln -sf /usr/lib/bun-linux-x64/bun /usr/bin/bun
     or fail "failed linking bun"
 
-    rm -rf $tmp /tmp/bun-linux-x64
+    rm -f $tmp
 end
 
 function upgrade_go
     set -l version (as_user curl -fLsS https://go.dev/VERSION?m=text | head -n1)
     or fail "failed fetching go version"
 
-    set -l tmp (mktemp)
+    set -l tmp (as_user mktemp)
 
     as_user curl -fLsS "https://dl.google.com/go/$version.linux-amd64.tar.gz" -o $tmp
     or fail "failed downloading go"
@@ -104,7 +102,7 @@ function upgrade_go
 end
 
 function upgrade_zed
-    set -l tmp (mktemp)
+    set -l tmp (as_user mktemp)
 
     as_user curl -fLsS "https://cloud.zed.dev/releases/stable/latest/download?asset=zed&arch=x86_64&os=linux&source=docs" -o $tmp
     or fail "failed downloading zed"
